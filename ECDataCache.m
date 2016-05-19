@@ -134,9 +134,7 @@
 #pragma mark - Deleters
 - (void) removeAllObjects{
 
-    for(NSString* key in [self cacheDirectory]){
-        [self removeDataForKey:key];
-    }
+    [self removeCacheDirectory];
     
     [super removeAllObjects];
 }
@@ -216,4 +214,10 @@ static dispatch_queue_t get_disk_io_queue()
     });
 }
 
+- (void)removeCacheDirectory{
+    dispatch_async(get_disk_io_queue(), ^{
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:[ECDataCache cacheDirectory] error:nil];
+    });
+}
 @end
