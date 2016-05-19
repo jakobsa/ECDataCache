@@ -132,6 +132,14 @@
 
 
 #pragma mark - Deleters
+- (void) removeAllObjects{
+
+    for(NSString* key in [self cacheDirectory]){
+        [self removeDataForKey:key];
+    }
+    
+    [super removeAllObjects];
+}
 
 - (void)removeDataForKey:(NSString *)key
 {
